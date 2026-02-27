@@ -8,7 +8,7 @@ st.set_page_config(page_title="Ai-Nova 2026", page_icon="🤖")
 st.title("🤖 Ai-Nova: Assistente Diritti Sociali")
 st.markdown("Chiedimi info su NASpI, ADI e Legge di Bilancio 2026.")
 # 2. Configurazione AI (Usa i Secrets di Streamlit per sicurezza)
-api_key = "AIzaSyCZ2HFWOK-wvyxkFOGlbhest_144gSjuRo"
+api_key = "AIzaSyASKvdaOLHV8C6yPBWPr30znkZ-i6e4RfQ"
 genai.configure(api_key=api_key)
 model = genai.GenerativeModel('gemini-pro')
 
