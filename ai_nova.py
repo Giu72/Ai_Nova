@@ -1,42 +1,24 @@
-
-import streamlit as st
 import google.generativeai as genai
-from cervello import testo_totale # Assicurati che cervello.py sia corretto
 
-# 1. Configurazione Interfaccia
-st.set_page_config(page_title="Ai-Nova 2026", page_icon="🤖")
-st.title("🤖 Ai-Nova: Assistente Diritti Sociali")
-st.markdown("Chiedimi info su NASpI, ADI e Legge di Bilancio 2026.")
-# 2. Configurazione AI (Usa i Secrets di Streamlit per sicurezza)
-api_key = "AIzaSyASKvdaOLHV8C6yPBWPr30znkZ-i6e4RfQ"
-genai.configure(transport='rest')
+# Configura la tua API KEY qui
+genai.configure(api_key="AIzaSyDic62vIr0-PfFzrrG4-eHkACYDaV2tVS0")
+
+# Inizializza il modello Gemini 1.5 Flash (Veloce e Free)
 model = genai.GenerativeModel('gemini-1.5-flash')
 
-# 3. Gestione Memoria Chat
-if "messages" not in st.session_state:
-    st.session_state.messages = []
-
-for message in st.session_state.messages:
-    with st.chat_message(message["role"]):
-        st.markdown(message["content"])
-
-# 4. Azione al messaggio dell'utente
-if prompt := st.chat_input("Scrivi qui la tua domanda..."):
-    st.session_state.messages.append({"role": "user", "content": prompt})
-    with st.chat_message("user"):
-        st.markdown(prompt)
-
-    with st.chat_message("assistant"):
-        with st.spinner("Sto consultando i documenti..."):
-            # Costruiamo il prompt usando il testo_totale che arriva da cervello.py
-            full_prompt = f"""
-            Sei 'Ai-Nova', un assistente esperto in diritti sociali.
-            USA SOLO IL CONTESTO SEGUENTE:
-            {testo_totale}
-            
-            DOMANDA: {prompt}
-            """
-            response = model.generate_content(full_prompt)
-            st.markdown(response.text)
-            
-    st.session_state.messages.append({"role": "assistant", "content": response.text})
+def chiedi_ad_ainova(domanda_utente, contesto_documenti):
+    prompt = f"""
+    Sei 'Ai-Nova', un assistente esperto in diritti sociali e sussidi (NASpI, ADI, INPS).
+    USA SOLO IL CONTESTO SEGUENTE PER RISPONDERE. 
+    SE L'INFORMAZIONE NON C'È, DI': 'Non trovo informazioni ufficiali su questo punto'.
+    
+    CONTESTO UFFICIALE:
+    {contesto_documenti}
+    
+    DOMANDA UTENTE:
+    {domanda_utente}
+    
+    RISPOSTA (Sii chiaro, empatico e cita la fonte):
+    """
+    response = model.generate_content(prompt)
+    return response.text
