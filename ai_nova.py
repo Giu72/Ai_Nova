@@ -10,7 +10,7 @@ st.markdown("Chiedimi info su NASpI, ADI e Legge di Bilancio 2026.")
 # 2. Configurazione AI (Usa i Secrets di Streamlit per sicurezza)
 api_key = "AIzaSyASKvdaOLHV8C6yPBWPr30znkZ-i6e4RfQ"
 genai.configure(api_key=api_key)
-model = genai.GenerativeModel('gemini-pro')
+model = genai.GenerativeModel('gemini-1.5-flash')
 
 # 3. Gestione Memoria Chat
 if "messages" not in st.session_state:
