@@ -7,13 +7,8 @@ from cervello import testo_totale # Assicurati che cervello.py sia corretto
 st.set_page_config(page_title="Ai-Nova 2026", page_icon="🤖")
 st.title("🤖 Ai-Nova: Assistente Diritti Sociali")
 st.markdown("Chiedimi info su NASpI, ADI e Legge di Bilancio 2026.")
-
 # 2. Configurazione AI (Usa i Secrets di Streamlit per sicurezza)
-try:
-    api_key = st.secrets["GOOGLE_API_KEY"]
-except:
-    api_key = "AIzaSyDic62vIr0-PfZrrG4-eHkACYDaV2tVS0" # Se i secrets non vanno, usa la tua chiave
-
+api_key = "AIzaSyDic62vIr0-PfZrrG4-eHkACYDaV2tVS0"
 genai.configure(api_key=api_key)
 model = genai.GenerativeModel('gemini-1.5-flash')
 
