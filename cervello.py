@@ -1,34 +1,15 @@
 import PyPDF2
-import requests
-from bs4 import BeautifulSoup
 
-def carica_pdf(percorso):
+def carica_pdf():
     testo = ""
     try:
-        with open(percorso, "rb") as f:
-            reader = PyPDF2.PdfReader(f)
-            for page in reader.pages:
-                testo += page.extract_text()
+        # Questo legge il tuo file PDF della legge
+        with open("Legge_bilancio2026.pdf", "rb") as f:
+            lettore = PyPDF2.PdfReader(f)
+            for pagina in lettore.pages:
+                testo += pagina.extract_text()
     except:
-        testo = "Errore caricamento PDF. "
+        testo = "Errore nella lettura del PDF."
     return testo
 
-def carica_link(urls):
-    contenuto = ""
-    for url in urls:
-        try:
-            res = requests.get(url, timeout=5)
-            soup = BeautifulSoup(res.text, 'html.parser')
-            contenuto += soup.get_text()
-        except:
-            continue
-    return contenuto
-
-# Configura i tuoi link
-links = [
-    "https://www.inps.it/it/it/sostegni-sussidi-indennita.html",
-    # Aggiungi gli altri qui...
-]
-
-# RIGA CORRETTA: Il nome del file deve essere IDENTICO a quello nella cartella
-testo_totale = carica_pdf("Legge_bilancio2026.pdf") + carica_link(links)
+testo_totale = carica_pdf()
